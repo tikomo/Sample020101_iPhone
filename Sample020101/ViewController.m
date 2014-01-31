@@ -18,6 +18,22 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
+    
+    NSArray* device = [@"AAA", @"BBB", @"CCC"];
+    
+    NSLog(@"device %@", device);
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 }
 
 - (void)didReceiveMemoryWarning
