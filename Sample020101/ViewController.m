@@ -8,6 +8,24 @@
 
 #import "ViewController.h"
 
+
+// ここに関数を定義する
+NSInteger intSort(id num1, id num2, void *context) {
+    
+    int v1 = [num1 intValue];
+    int v2 = [num2 intValue];
+    
+    if (v1 < v2) {
+        
+        return NSOrderedAscending;
+    } else if (v1 > v2) {
+        return NSOrderedDescending;
+    } else {
+        return NSOrderedSame;
+    }
+}
+
+
 @interface ViewController ()
 
 @end
@@ -127,6 +145,144 @@
     NSLog(@"remove black = %@", newColor);
 
     
+    // 配列のネスティング
+    NSMutableArray* theList = [NSMutableArray array];
+    [theList addObject:@[@"AA", @"BB"]];
+    [theList addObject:@[@"CC", @"DD"]];
+    [theList addObject:@[@"EE", @"FF"]];
+    
+    NSLog(@"theList = %@", theList);
+    NSLog(@"theList[0][0] = %@", theList[0][0]); // AA
+    NSLog(@"theList[1][1] = %@", theList[1][1]); // DD
+    
+    NSMutableArray* theTable = [NSMutableArray array];
+    NSMutableArray* row1 = [NSMutableArray array];
+    NSMutableArray* row2 = [NSMutableArray array];
+    NSMutableArray* row3 = [NSMutableArray array];
+    
+    [theTable addObject:@[row1]];
+    [theTable addObject:@[row2]];
+    [theTable addObject:@[row3]];
+    
+    
+    [row1 addObject:@[@"row1_0", @"row1_1", @"row1_2"]];
+    [row2 addObject:@[@"row2_0", @"row2_1", @"row2_2"]];
+    [row3 addObject:@[@"row3_0", @"row3_1", @"row3_2"]];
+    
+    NSLog(@"%@", theTable[0]); //
+    NSLog(@"%@", theTable[1]); //
+    NSLog(@"%@", theTable[2]); //
+
+    NSLog(@"%@", (theTable[0])[0][0][0]); // row1_0
+    NSLog(@"%@", (theTable[0])[0][0][1]); // row1_2
+    NSLog(@"%@", (theTable[0])[0][0][2]); // row1_2
+
+    NSLog(@"%@", (theTable[1])[0][0][0]); // row1_0
+    NSLog(@"%@", (theTable[1])[0][0][1]); // row1_2
+    NSLog(@"%@", (theTable[1])[0][0][2]); // row1_2
+    
+    NSLog(@"%@", (theTable[2])[0][0][0]); // row1_0
+    NSLog(@"%@", (theTable[2])[0][0][1]); // row1_2
+    NSLog(@"%@", (theTable[2])[0][0][2]); // row1_2
+    
+    NSLog(@"----------");
+    
+    NSMutableArray* theTable20 = [NSMutableArray array];
+    NSMutableArray* row21 = [NSMutableArray array];
+    NSMutableArray* row22 = [NSMutableArray array];
+    NSMutableArray* row23 = [NSMutableArray array];
+    
+    [theTable20 addObject:row21];
+    [theTable20 addObject:row22];
+    [theTable20 addObject:row23];
+
+    [row21 addObject:@[@"row0_0", @"row0_1", @"row0_2"]];
+    [row21 addObject:@[@"row1_0", @"row1_1", @"row1_2"]];
+    
+    [row22 addObject:@[@"row22_0", @"row22_1", @"row22_2"]];
+    [row23 addObject:@[@"row23_0", @"row23_1", @"row23_2"]];
+    
+    NSLog(@"%@", theTable20); //
+    NSLog(@"%@", (theTable20[0])); //
+    
+    NSLog(@"%@", (theTable20[0])[0][0]); // row0_0
+    NSLog(@"%@", (theTable20[0])[0][1]); // row0_1
+    NSLog(@"%@", (theTable20[0])[0][2]); // row0_2
+    
+    NSLog(@"%@", (theTable20[0])[1][0]); // row1_0
+    NSLog(@"%@", (theTable20[0])[1][1]); // row1_1
+    NSLog(@"%@", (theTable20[0])[1][2]); // row1_2
+    
+    //NSLog(@"%@", theTable20[1]); //
+    //NSLog(@"%@", theTable20[2]); //
+    
+    // うーん...いまいちわからないね...
+    // 先に進もう！
+    
+    // 配列を検索する
+    NSArray* cities = @[@"横浜", @"銀座", @"渋谷", @"新宿"];
+    NSUInteger index = [cities indexOfObject:@"渋谷"];
+    if (index != NSNotFound) {
+        NSLog(@"index = %d", index); // index = 2
+    } else {
+        NSLog(@"見つかりませんでした。");
+    }
+    
+    // 配列に含まれているか調べる
+    BOOL isFound = [cities containsObject:@"渋谷"];
+    
+    if (isFound) {
+        NSLog(@"含まれている");
+    } else {
+        NSLog(@"含まれていない");
+    }
+    
+    NSString* city = @"池袋";
+    
+    isFound = [cities containsObject:city];
+
+    if (isFound) {
+        NSLog(@"含まれている");
+    } else {
+        NSLog(@"含まれていない");
+    }
+    
+    
+    // 配列をソートする
+    NSArray* arrFruits = @[@"Melon", @"Peach", @"Apple", @"Orange"];
+    NSArray* sortedArrFruits = [arrFruits sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)];
+    
+    NSLog(@"%@", arrFruits); // Melon,    Peach,    Apple,    Orange
+    NSLog(@"%@", sortedArrFruits); // Apple,    Melon,    Orange,    Peach
+    
+    NSArray* sortedA = [arrFruits sortedArrayUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"" ascending:YES]]];
+    
+    NSArray* sortedB = [arrFruits sortedArrayUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"" ascending:NO]]];
+    
+    NSLog(@"%@", sortedA);
+    NSLog(@"%@", sortedB);
+    
+    // オリジナルの比較関数を使ってソートする
+    
+    // 比較関数inSort()(<-自作の関数)を使ってソートする
+    NSMutableArray* vListA = [NSMutableArray arrayWithCapacity:10];
+    NSInteger vA;
+    
+    for (int i = 0; i < 10; i++) {
+        vA = arc4random() % 30; // 0 - 29 までの乱数の生成
+        [vListA addObject:[NSNumber numberWithInteger:vA]];
+    }
+    NSLog(@"%@", vListA); // ソート前
+    
+    // ソートした配列を作る
+    NSArray* listA = [vListA sortedArrayUsingFunction:intSort context:nil];
+    NSLog(@"%@", listA); // ソート後
+    
+    // 降順にソートする
+    
+    
+                                                                
+    
     
     
     
@@ -138,6 +294,8 @@
     
     
 }
+
+
 
 - (void)didReceiveMemoryWarning
 {
