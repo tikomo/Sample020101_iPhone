@@ -255,12 +255,19 @@ NSInteger intSort(id num1, id num2, void *context) {
     NSLog(@"%@", arrFruits); // Melon,    Peach,    Apple,    Orange
     NSLog(@"%@", sortedArrFruits); // Apple,    Melon,    Orange,    Peach
     
+    // 昇順
     NSArray* sortedA = [arrFruits sortedArrayUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"" ascending:YES]]];
     
+    // 降順
     NSArray* sortedB = [arrFruits sortedArrayUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"" ascending:NO]]];
     
-    NSLog(@"%@", sortedA);
-    NSLog(@"%@", sortedB);
+    NSLog(@"asc = %@", sortedA);
+    NSLog(@"desc = %@", sortedB);
+
+    // 配列を逆にする
+    NSArray* reversList = [[arrFruits reverseObjectEnumerator] allObjects];
+    NSLog(@"revers = %@", reversList);
+    
     
     // オリジナルの比較関数を使ってソートする
     
@@ -278,13 +285,52 @@ NSInteger intSort(id num1, id num2, void *context) {
     NSArray* listA = [vListA sortedArrayUsingFunction:intSort context:nil];
     NSLog(@"%@", listA); // ソート後
     
-    // 降順にソートする
     
+    //
+    // 条件でフィルタリング
+    //
     
-                                                                
+    // 先頭の文字でフィルタリング
+    NSMutableArray* numbers_T = [NSMutableArray arrayWithArray:@[@"one", @"two", @"three", @"four", @"five"]];
     
+    //
+    // Tで始まる値 - @"%K beginswith %@", @"self", @"T"
+    // %K の位置に self, %@ の位置に T に置き換えます。
+    // @"self beginswith 'T'" と同じになります。
+    //
+    NSPredicate* predicate = [NSPredicate predicateWithFormat:@"%K beginswith %@", @"self", @"t"];
+    [numbers_T filterUsingPredicate:predicate];
     
+    NSLog(@"%@", numbers_T); // two, three
     
+    //
+    // 含まれている文字で抽出する
+    // contains は指定の文字が含まれている値を抽出
+    //
+    NSMutableArray* numbers_E = [NSMutableArray arrayWithArray:@[@"one", @"two", @"three", @"four", @"five"]];
+    NSPredicate* predicate2 = [NSPredicate predicateWithFormat:@"%K contains %@", @"self", @"e"];
+    [numbers_E filterUsingPredicate:predicate2];
+    
+    NSLog(@"%@", numbers_E); // one, three, five
+    
+    //
+    // 文字数で抽出する
+    // length >, <, >=, <=, ==
+    //
+    NSMutableArray* numbers_3 = [NSMutableArray arrayWithArray:@[@"one", @"two", @"three", @"four", @"five"]];
+    NSPredicate* predicate3 = [NSPredicate predicateWithFormat:@"length == 3"];
+    [numbers_3 filterUsingPredicate:predicate3];
+    
+    NSLog(@"%@", numbers_3 ); // one, three, five
+    
+    //
+    // 10以上の値を抜き出す
+    //
+    NSMutableArray* numbers_4 = [NSMutableArray arrayWithArray:@[@3, @9, @11, @13, @18]];
+    NSPredicate* predicate4 = [NSPredicate predicateWithFormat:@"%K >= %d", @"self", 10];
+    [numbers_4 filterUsingPredicate:predicate4];
+    
+    NSLog(@"%@", numbers_4 ); // one, three, five
     
     
     
